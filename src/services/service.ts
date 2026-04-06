@@ -9,7 +9,7 @@ export const createBooks = async (data: {
     title: string,
     author: string,
     price: number,
-    image: string,
+    image_url: string,
     description: string,
     stock: number,
 }) => {

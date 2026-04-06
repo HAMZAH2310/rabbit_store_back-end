@@ -17,23 +17,24 @@ export const getBooks = async (req: Request, res: Response) => {
 
 export const addBook = async (req: Request, res: Response) => {
     try {
-        const { title, author, price, image, description, stock } = req.body;
+        const { title, author, price, image_url, description, stock } = req.body;
 
-        const newBook = createBooks({
+        // Validation - ensure required fields are present
+        if (!title || !author || price === undefined) {
+            return res.status(400).json({
+                success: false,
+                message: "Missing required fields: title, author, and price are mandatory.",
+            });
+        }
+
+        const newBook = await createBooks({
             title,
             author,
             price,
-            image,
+            image_url,
             description,
             stock,
         });
-
-        if (!title || !author || !price) {
-            return res.status(400).json({
-                success: false,
-                message: "Title, Author, and Price are required",
-            });
-        }
 
         res.status(201).json({
             success: true,
